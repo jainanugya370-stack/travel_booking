@@ -1,0 +1,74 @@
+{% extends 'bookings/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Search Travel Options</h2>
+
+  <!-- Search Filter Form -->
+  <form method="GET" class="row g-3 align-items-end bg-light p-4 rounded shadow-sm mb-5">
+  <div class="col-md-3">
+    <label for="source" class="form-label">From</label>
+    <input type="text" name="source" id="source" value="{{ request.GET.source }}" class="form-control" placeholder="Enter source city">
+  </div>
+  <div class="col-md-3">
+    <label for="destination" class="form-label">To</label>
+    <input type="text" name="destination" id="destination" value="{{ request.GET.destination }}" class="form-control" placeholder="Enter destination city">
+  </div>
+  <div class="col-md-2">
+    <label for="type" class="form-label">Travel Type</label>
+    <select name="type" id="type" class="form-select">
+      <option value="">All</option>
+      <option value="Flight" {% if request.GET.type == "Flight" %}selected{% endif %}>Flight</option>
+      <option value="Train" {% if request.GET.type == "Train" %}selected{% endif %}>Train</option>
+      <option value="Bus" {% if request.GET.type == "Bus" %}selected{% endif %}>Bus</option>
+    </select>
+  </div>
+  <div class="col-md-2">
+    <label for="date" class="form-label">Travel Date</label>
+    <input type="date" name="date" id="date" value="{{ request.GET.date }}" class="form-control">
+  </div>
+  <div class="col-md-2">
+    <button type="submit" class="btn btn-primary w-100 mt-1">Search</button>
+  </div>
+</form>
+
+
+  <!-- Travel Option Results -->
+  {% if options %}
+    <table class="table table-hover shadow-sm">
+      <thead class="table-dark">
+        <tr>
+          <th>Type</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Date & Time</th>
+          <th>Price</th>
+          <th>Available Seats</th>
+          <th>Book</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for opt in options %}
+        <tr>
+          <td>{{ opt.travel_type }}</td>
+          <td>{{ opt.source }}</td>
+          <td>{{ opt.destination }}</td>
+          <td>{{ opt.date_time }}</td>
+          <td>₹{{ opt.price }}</td>
+          <td>{{ opt.available_seats }}</td>
+          <td>
+            <form method="POST" action="{% url 'book' %}">
+              {% csrf_token %}
+              <input type="hidden" name="travel_option_id" value="{{ opt.id }}">
+              <input type="number" name="number_of_seats" min="1" max="{{ opt.available_seats }}" class="form-control mb-1" style="width: 80px;" required>
+              <button class="btn btn-sm btn-success">Book</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="text-muted text-center">No travel options found. Try changing filters or add entries in admin panel.</p>
+  {% endif %}
+</div>
+{% endblock %}
