@@ -122,15 +122,7 @@ python manage.py runserver
 
 ---
 
-## 📊 Future Improvements
-- 💳 Payment integration  
-- 🌍 API-based travel data  
-- 📱 Responsive UI (Bootstrap/React)  
-- 🏆 Admin dashboard enhancements  
-
----
-
-## 🤝 Contributing
+##  Contributing
 Contributions are welcome!
 
 1. Fork the repository  
