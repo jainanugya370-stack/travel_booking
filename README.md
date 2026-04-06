@@ -1,7 +1,7 @@
 # ✈️ Travel Booking Web Application
 
 ## 📌 Overview
-This is a **Django-based Travel Booking Web Application** that allows users to browse travel options, register/login, and book trips بسهولة.  
+This is a **Django-based Travel Booking Web Application** that allows users to browse travel options, register/login, and book trips.  
 The project demonstrates full-stack development using Django with templates, authentication, and database integration.
 
 ---
